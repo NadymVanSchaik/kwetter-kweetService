@@ -47,3 +47,29 @@ app.listen(config.port, config.host, (e)=> {
     }
     logger.info(`${config.name} running on ${config.host}:${config.port}`);
 });
+
+var amqp = require('amqplib/callback_api');
+const CONN_URL = process.env.MQ_CONNECTION; 
+
+const deleteUser = require('./functions/deleteUser');
+amqp.connect(CONN_URL, function (err, conn) {
+    conn.createChannel(function (err, ch) {
+        ch.consume('delete-user', function (msg) {
+            ch.ack(msg)
+            deleteUser(msg.content.toString())
+      },{ noAck: false }
+    );
+    });
+});
+
+const updateUser = require('./functions/updateUser');
+amqp.connect(CONN_URL, function (err, conn) {
+    conn.createChannel(function (err, ch) {
+        ch.consume('update-user', function (msg) {
+            ch.ack(msg)
+            console.log(msg.content)
+            updateUser(msg.content.toString())
+      },{ noAck: false }
+    );
+    });
+});

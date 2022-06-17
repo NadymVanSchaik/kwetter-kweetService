@@ -1,14 +1,13 @@
 const Kweet = require('../models/Kweet');
 
-//TODO rabbitMQ listen to call from userService to delete user
-
-function deleteUser(user){
+async function deleteUser(userID){
     await Kweet.updateMany(
-        {userId: user.id}, 
+        {userId: userID}, 
         {$set: {
-        name: "unknown", 
+        userName: "unknown", 
     }}
     )
+    console.log("Username of user ", userID, " has been changed to unknown")
 }
 
 module.exports = deleteUser;

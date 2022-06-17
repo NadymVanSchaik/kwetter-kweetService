@@ -8,7 +8,8 @@ function createKweet(kweet){
         text: kweet.text,
     })
     queueName = "update-kweet-counter"
-    payload =  kweet.userId.toString()
+    id = kweet.userId.toString()
+    payload =  id+"|"+"1"
     publishToQueue(queueName, payload);
     return newKweet
 }

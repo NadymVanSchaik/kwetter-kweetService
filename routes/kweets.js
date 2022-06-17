@@ -3,7 +3,8 @@ const router = express.Router();
 const Kweet = require('../models/Kweet')
 const app = express();
 const bodyParser = require('body-parser');
-const createKweet = require('../functions/createKweet')
+const createKweet = require('../functions/createKweet');
+const deleteKweet = require('../functions/deleteKweet');
 
 app.use(express.json());
 app.use(bodyParser.json());
@@ -23,7 +24,7 @@ router.get('/all', async (req, res) => {
 //Get kweets from user
 router.get('/user/:id', async (req, res) => {
     try{
-        const kweetsFromUser = await Comment.find({"userId": req.params.id}).exec();
+        const kweetsFromUser = await Kweet.find({"userId": req.params.id}).exec();
         res.json(kweetsFromUser)
     } catch(err){
         res.json({message: err});
@@ -32,7 +33,6 @@ router.get('/user/:id', async (req, res) => {
 
 //Add Kweet 
 router.post('/', jsonParser, (req, res) => {
-    console.log(createKweet(req.body))
     createKweet(req.body).save()
     .then(data => {
         res.json(data)
@@ -61,7 +61,10 @@ router.patch('/:id', jsonParser, async (req, res) => {
 //Delete Kweet
 router.delete('/:id', async (req, res) => {
     try {
+        const user = await Kweet.findById(req.params.id).exec()
+        console.log(user.userId)
         const removedKweet = await Kweet.deleteOne({_id: req.params.id});
+        deleteKweet(user.userId)
         res.json(removedKweet)
     } catch(err) {
         res.json({message: err})

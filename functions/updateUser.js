@@ -1,13 +1,16 @@
 const Kweet = require('../models/Kweet');
 
-//TODO rabbitMQ listen to call from userService to update name
-function updateUser(user){
+
+async function updateUser(payload){
+    payloadArray = payload.split('|')
+
     await Kweet.updateMany(
-        {userId: user.id}, 
+        {userId: payloadArray[0]}, 
         {$set: {
-        name: user.name, 
+        userName: payloadArray[1], 
     }}
     )
+    console.log("User", payloadArray[0], "has been updated with new name ", payloadArray[1] )
 }
 
 module.exports = updateUser;
