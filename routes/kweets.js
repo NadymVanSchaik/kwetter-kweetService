@@ -3,7 +3,7 @@ const router = express.Router();
 const Kweet = require('../models/Kweet')
 const app = express();
 const bodyParser = require('body-parser');
-const { remove } = require('../models/Kweet');
+const createKweet = require('../functions/createKweet')
 
 app.use(express.json());
 app.use(bodyParser.json());
@@ -32,6 +32,7 @@ router.get('/user/:id', async (req, res) => {
 
 //Add Kweet 
 router.post('/', jsonParser, (req, res) => {
+    console.log(createKweet(req.body))
     createKweet(req.body).save()
     .then(data => {
         res.json(data)
