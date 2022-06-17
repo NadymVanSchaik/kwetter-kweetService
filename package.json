@@ -1,7 +1,7 @@
 {
-  "name": "user-service",
+  "name": "kweet-service",
   "version": "1.0.0",
-  "description": "user service for mock kwetter project",
+  "description": "kweet service for mock kwetter project",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

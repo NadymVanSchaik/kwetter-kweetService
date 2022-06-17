@@ -2,7 +2,7 @@ version: '3'
 services:
   kwetter-service:
     restart: on-failure
-    image: user-service
+    image: kweet-service
     build: 
       context: ./
     ports:
