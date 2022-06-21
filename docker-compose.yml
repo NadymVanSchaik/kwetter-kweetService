@@ -7,11 +7,12 @@ services:
       context: ./
     ports:
       - "5000"
-    networks:
-      - kwetter
     env_file: ./.env
+    deploy:
+      replicas: 4
 
   nginx:
+    restart: on-failure
     image: nginx:latest
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
@@ -19,11 +20,6 @@ services:
       - kwetter-service
     ports:
       - "4000:4000"
-    networks:
-      - kwetter
-networks:
-  kwetter:
-    driver: bridge
 
 volumes: 
   db-config:
