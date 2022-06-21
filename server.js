@@ -6,8 +6,8 @@ const mongoose = require('mongoose')
 require('dotenv/config')
 
 const config = {
-    name: 'kweet-service',
-    port: 3001,
+    name: 'kwetter-service',
+    port: 5000,
     host: '0.0.0.0',
 };
 
@@ -67,7 +67,6 @@ amqp.connect(CONN_URL, function (err, conn) {
     conn.createChannel(function (err, ch) {
         ch.consume('update-user', function (msg) {
             ch.ack(msg)
-            console.log(msg.content)
             updateUser(msg.content.toString())
       },{ noAck: false }
     );

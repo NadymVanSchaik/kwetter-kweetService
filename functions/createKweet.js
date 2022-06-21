@@ -11,6 +11,7 @@ function createKweet(kweet){
     id = kweet.userId.toString()
     payload =  id+"|"+"1"
     publishToQueue(queueName, payload);
+    console.log("This is a new kweet: ", newKweet)
     return newKweet
 }
 module.exports = createKweet;

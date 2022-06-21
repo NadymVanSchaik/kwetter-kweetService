@@ -10,9 +10,10 @@ amqp.connect(CONN_URL, function (err, conn) {
 
 const publishToQueue = async (queueName, data) => {
     ch.sendToQueue(queueName, Buffer.from(data), {persistent: true});
+    console.log("This is being send over RabbitMQ: ", data)
 }
 
-process.on('exit', (code) => {
+process.on('exit', () => {
     ch.close();
     console.log(`Closing rabbitmq channel`);
 });

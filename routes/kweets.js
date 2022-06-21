@@ -62,7 +62,6 @@ router.patch('/:id', jsonParser, async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try {
         const user = await Kweet.findById(req.params.id).exec()
-        console.log(user.userId)
         const removedKweet = await Kweet.deleteOne({_id: req.params.id});
         deleteKweet(user.userId)
         res.json(removedKweet)
